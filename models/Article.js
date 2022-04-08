@@ -11,7 +11,6 @@ const articleSchema = new mongoose.Schema({
     type: new mongoose.Schema({
       name: {
         type: String,
-        unique: true,
         minlength: 4,
         maxlength: 50,
       },
@@ -31,6 +30,22 @@ const articleSchema = new mongoose.Schema({
   dateCreated: {
     type: Date,
     default: Date.now,
+  },
+  comments: {
+    type: [
+      new mongoose.Schema({
+        commenter: {
+          type: String,
+          minlength: 5,
+          maxlength: 50,
+        },
+        message: {
+          type: String,
+          minlength: 1,
+          maxlength: 1000,
+        },
+      }),
+    ],
   },
 });
 

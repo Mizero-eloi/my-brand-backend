@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const config = require("config");
+const bodyParser = require("body-parser");
 
 if (!config.get("serverPort") || !config.get("jwtPrivateKey")) {
   console.log("Jwt not configured");
@@ -15,10 +16,12 @@ mongoose
 
     // Using routes
     app.use(express.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use("/contactMe", require("./routes/contactMeRoute"));
     app.use("/signUp", require("./routes/userRegistrationRoute"));
     app.use("/logIn", require("./routes/userLogInRoute"));
     app.use("/article", require("./routes/articlesRoute"));
+    app.use("/userProfile", require("./routes/userProfileRoute"));
 
     const port = process.env.PORT || config.get("serverPort");
 

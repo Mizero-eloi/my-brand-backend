@@ -1,17 +1,11 @@
 const express = require("express");
 const {
-  createArticle,
-  getAllArticles,
-  postImage,
-  updateArticle,
-  deleteArticle,
-  getOneArticle,
-} = require("../controllers/articles");
-const admin = require("../middleware/admin");
+  userProfile,
+  userProfilePicture,
+} = require("../controllers/userProfile");
 const auth = require("../middleware/auth");
-const multer = require("multer");
-
 const router = express.Router();
+const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -41,11 +35,7 @@ const upload = multer({
   fileFilter: filter,
 });
 
-router.post("/imageUpload/:id", auth, admin, upload.single("image"), postImage);
-router.post("/", auth, admin, createArticle);
-router.put("/:id", auth, admin, updateArticle);
-router.delete("/:id", auth, admin, deleteArticle);
-router.get("/", getAllArticles);
-router.get("/:id", getOneArticle);
+router.put("/:id", auth, userProfile);
+router.put("/image/:id", auth, upload.single("profile"), userProfilePicture);
 
 module.exports = router;
