@@ -6,6 +6,8 @@ const {
   updateArticle,
   deleteArticle,
   getOneArticle,
+  commentArticle,
+  likeArticle,
 } = require("../controllers/articles");
 const admin = require("../middleware/admin");
 const auth = require("../middleware/auth");
@@ -43,6 +45,8 @@ const upload = multer({
 
 router.post("/imageUpload/:id", auth, admin, upload.single("image"), postImage);
 router.post("/", auth, admin, createArticle);
+router.post("/comment/:id", auth, commentArticle);
+router.get("/like/:id", auth, likeArticle);
 router.put("/:id", auth, admin, updateArticle);
 router.delete("/:id", auth, admin, deleteArticle);
 router.get("/", getAllArticles);

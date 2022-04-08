@@ -41,8 +41,19 @@ const articleSchema = new mongoose.Schema({
         },
         message: {
           type: String,
-          minlength: 1,
+          minlength: 5,
           maxlength: 1000,
+        },
+      }),
+    ],
+  },
+  likes: {
+    type: [
+      new mongoose.Schema({
+        username: {
+          type: String,
+          minlength: 4,
+          maxlength: 50,
         },
       }),
     ],
@@ -60,5 +71,13 @@ const validateArticle = (message) => {
   return schema.validate(message);
 };
 
+const validateComment = (message) => {
+  const schema = Joi.object().keys({
+    message: Joi.string().min(5).max(1000).required(),
+  });
+  return schema.validate(message);
+};
+
 module.exports.Article = Article;
 module.exports.validateArticle = validateArticle;
+module.exports.validateComment = validateComment;
