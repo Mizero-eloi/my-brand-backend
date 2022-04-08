@@ -22,6 +22,7 @@ mongoose
     app.use("/logIn", require("./routes/userLogInRoute"));
     app.use("/article", require("./routes/articlesRoute"));
     app.use("/userProfile", require("./routes/userProfileRoute"));
+    app.use("/users", require("./routes/userRoute"));
 
     const port = process.env.PORT || config.get("serverPort");
 
