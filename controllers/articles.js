@@ -59,7 +59,7 @@ module.exports.getOneArticle = async (req, res) => {
     res.status(200).send(article);
   } catch {
     res.status(404);
-    res.send({ error: "Article doesn't exist!" });
+    res.send("Article does not exist!");
   }
 };
 
@@ -100,7 +100,7 @@ module.exports.commentArticle = async (req, res) => {
 
   // Validating if the article exists
   let article = await Article.findOne({ _id: req.params.id });
-  if (!article) res.status(400).send("Oops! Article does not exist !");
+  if (!article) return res.status(400).send("Oops! Article does not exist !");
 
   // Comment on article
   article = await Article.findByIdAndUpdate(
