@@ -22,8 +22,8 @@ module.exports.getAllArticles = async (req, res) => {
 module.exports.createArticle = async (req, res) => {
   try {
     // validate the user's given data and return if it is not valid
-    // const { error } = validateArticle(req.body);
-    // if (error) return res.status(400).send(error.details[0].message);
+    const { error } = validateArticle(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
 
     // Getting data from request body
 
@@ -67,8 +67,8 @@ module.exports.getOneArticle = async (req, res) => {
 
 module.exports.updateArticle = async (req, res) => {
   // validate the user's given data and return if it is not valid
-  // const { error } = validateArticle(req.body);
-  // if (error) return res.status(400).send(error.details[0].message);
+  const { error } = validateArticle(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
   // And finally updating the given data
   updateCollection(

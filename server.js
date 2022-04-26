@@ -23,7 +23,7 @@ const swaggerOptions = {
   swaggerDefinition: {
     info: {
       title: "My-brand API",
-      description: "My-brand1 all apis",
+      description: "My-brand all apis",
       contact: {
         name: "MIZERO Eloi",
       },
@@ -44,6 +44,11 @@ app.use(
 // Using routes
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  "/documentation",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDoc, false, { docExpansion: "none" })
+);
 app.use("/contactMe", require("./routes/contactMeRoute"));
 app.use("/signUp", require("./routes/userRegistrationRoute"));
 app.use("/logIn", require("./routes/userLogInRoute"));
