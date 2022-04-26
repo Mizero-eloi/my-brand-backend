@@ -1,5 +1,9 @@
 const express = require("express");
-const { Article, validateArticle } = require("../models/Article"); // new
+const {
+  Article,
+  validateArticle,
+  validateComment,
+} = require("../models/Article"); // new
 const updateCollection = require("../services/updateCollection");
 
 // Get all posts
@@ -55,7 +59,7 @@ module.exports.getOneArticle = async (req, res) => {
     res.status(200).send(article);
   } catch {
     res.status(404);
-    res.send({ error: "Article doesn't exist!" });
+    res.send("Article does not exist!");
   }
 };
 
@@ -85,4 +89,59 @@ module.exports.deleteArticle = async (req, res) => {
     res.status(404);
     res.send({ error: "Article doesn't exist!" });
   }
+};
+
+// Comment on article
+
+module.exports.commentArticle = async (req, res) => {
+  // Validate the comment
+  const { error } = validateComment(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  // Validating if the article exists
+  let article = await Article.findOne({ _id: req.params.id });
+  if (!article) return res.status(400).send("Oops! Article does not exist !");
+
+  // Comment on article
+  article = await Article.findByIdAndUpdate(
+    req.params.id,
+    {
+      $push: {
+        comments: {
+          commenter: req.user.username,
+          message: req.body.message,
+        },
+      },
+    },
+    { new: true }
+  );
+
+  // Returning the article
+  res.status(200).send(article);
+};
+
+// Like an article
+
+module.exports.likeArticle = async (req, res) => {
+  // Validating if the article exists
+  let article = await Article.findOne({ _id: req.params.id });
+  if (!article) res.status(400).send("Oops! Article does not exist !");
+
+  // liking the article
+
+  article = await Article.findByIdAndUpdate(
+    req.params.id,
+    {
+      $push: {
+        likes: {
+          username: req.user.username,
+          _id: req.user._id,
+        },
+      },
+    },
+    { new: true }
+  );
+
+  // Returning the article
+  res.status(200).send(article);
 };

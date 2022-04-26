@@ -1,0 +1,593 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentation of all Frisky Apis",
+    "version": "1.0.0",
+    "Title": "my-brand apis",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": { "name": "MIZERO Eloi" },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "user",
+      "description": "Apis about user authetication, user profile,..."
+    },
+    {
+      "name": "Articles",
+      "description": "Apis about user article..."
+    },
+    {
+      "name": "Contact us",
+      "description": "Apis about contact us article..."
+    }
+  ],
+  "paths": {
+    "/signUp": {
+      "post": {
+        "tags": ["user"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "properties": {
+              "username": { "type": "string", "example": "theGiver" },
+              "email": {
+                "type": "string",
+                "example": "theGiver@gmail.com"
+              },
+              "password": { "type": "string", "example": "12345" }
+            }
+          }
+        ],
+        "schema": { "$ref": "#/definitions/User" },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "$ref": "#/definitions/User"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/logIn": {
+      "post": {
+        "tags": ["user"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "properties": {
+              "username": {
+                "type": "string",
+                "example": "eloi"
+              },
+              "password": { "type": "string", "example": "12345" }
+            }
+          }
+        ],
+        "schema": { "$ref": "#/definitions/User" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/User"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/userprofile/{id}": {
+      "put": {
+        "tags": ["user"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "properties": {
+              "username": {
+                "type": "string",
+                "example": "theGiver"
+              },
+              "email": { "type": "string", "example": "12345" }
+            }
+          }
+        ],
+        "schema": { "$ref": "#/definitions/User" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/User"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["user"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "schema": { "$ref": "#/definitions/User" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/User"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["user"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "schema": { "$ref": "#/definitions/User" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/User"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/userprofile/image/{id}": {
+      "put": {
+        "tags": ["user"],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "formData",
+            "name": "profile",
+            "type": "file"
+          }
+        ],
+        "schema": { "$ref": "#/definitions/User" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/User"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/article": {
+      "get": {
+        "tags": ["Articles"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "schema": { "$ref": "#/definitions/Article" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/Article"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "post": {
+        "tags": ["Articles"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Article created with Swag"
+              },
+              "content": { "type": "string", "example": "contentInSwaggger" }
+            }
+          }
+        ],
+        "schema": { "$ref": "#/definitions/Article" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/Article"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/article/{id}": {
+      "put": {
+        "tags": ["Articles"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Article created with Swag"
+              },
+              "content": { "type": "string", "example": "contentInSwaggger" }
+            }
+          }
+        ],
+        "schema": { "$ref": "#/definitions/Article" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/Article"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "delete": {
+        "tags": ["Articles"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "schema": { "$ref": "#/definitions/Article" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/Article"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "get": {
+        "tags": ["Articles"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "schema": { "$ref": "#/definitions/Article" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/Article"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/article/imageUpload/{id}": {
+      "post": {
+        "tags": ["Articles"],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "formData",
+            "name": "image",
+            "type": "file"
+          }
+        ],
+        "schema": { "$ref": "#/definitions/Articles" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/Articles"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/article/like/{id}": {
+      "get": {
+        "tags": ["Articles"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          }
+        ],
+        "schema": { "$ref": "#/definitions/Articles" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/Articles"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/article/comment/{id}": {
+      "post": {
+        "tags": ["Articles"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "header",
+            "name": "x-auth-token",
+            "schema": {
+              "type": "string"
+            },
+            "required": "true"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Cool article 👌"
+              }
+            }
+          }
+        ],
+        "schema": { "$ref": "#/definitions/Articles" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/Articles"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/contactMe": {
+      "post": {
+        "tags": ["Contact us"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Aime"
+              },
+              "email": {
+                "type": "string",
+                "example": "eloimizero456@gmail.com"
+              },
+              "message": {
+                "type": "string",
+                "example": "Cool article 👌"
+              }
+            }
+          }
+        ],
+        "schema": { "$ref": "#/definitions/Article" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/Article"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "get": {
+        "tags": ["Contact us"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "schema": { "$ref": "#/definitions/Article" },
+        "responses": {
+          "201": {
+            "description": "success",
+            "$ref": "#/definitions/Article"
+          },
+          "400": { "description": "Bad request" },
+          "500": { "description": "Server error" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "apiResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "Article": {
+      "type": "object",
+      "content": "application/json",
+      "required": ["title", "content"],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "content": "application/json",
+      "required": ["email", "password"],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
