@@ -1,0 +1,60 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentation of all Frisky Apis",
+    "version": "1.0.0",
+    "Title": "Frisky apis",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": { "name": "Frisky Devs" },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "Articles",
+      "description": "Apis about user article..."
+    }
+  ],
+  "paths": {
+    "get": {
+      "tags": ["Articles"],
+      "consumes": ["application/json"],
+      "produces": ["application/json"],
+      "parameters": [],
+      "schema": { "$ref": "#/definitions/Challenge" },
+      "responses": {
+        "201": {
+          "description": "success",
+          "$ref": "#/definitions/Article"
+        },
+        "400": { "description": "Bad request" },
+        "500": { "description": "Server error" }
+      }
+    }
+  },
+  "definitions": {
+    "apiResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "Article": {
+      "type": "object",
+      "content": "application/json",
+      "required": ["title", "content"],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

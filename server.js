@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const config = require("config");
 const bodyParser = require("body-parser");
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 if (!config.get("serverPort") || !config.get("jwtPrivateKey")) {
   console.log("Jwt not configured");
@@ -16,6 +18,28 @@ mongoose
   });
 
 const app = express();
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: "My-brand API",
+      description: "My-brand1 all apis",
+      contact: {
+        name: "MIZERO Eloi",
+      },
+      servers: ["http://localhost:5000"],
+      version: "1.0.1",
+    },
+  },
+  apis: ["./routes/*.js"],
+};
+
+const swaggerDoc = require("./documentation.json");
+app.use(
+  "/documentation",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDoc, false, { docExpansion: "none" })
+);
 
 // Using routes
 app.use(express.json());
