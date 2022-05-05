@@ -410,11 +410,11 @@
             "type": "file"
           }
         ],
-        "schema": { "$ref": "#/definitions/Articles" },
+        "schema": { "$ref": "#/definitions/Article" },
         "responses": {
           "201": {
             "description": "success",
-            "$ref": "#/definitions/Articles"
+            "$ref": "#/definitions/Article"
           },
           "400": { "description": "Bad request" },
           "500": { "description": "Server error" }
@@ -444,11 +444,11 @@
             "required": "true"
           }
         ],
-        "schema": { "$ref": "#/definitions/Articles" },
+        "schema": { "$ref": "#/definitions/Article" },
         "responses": {
           "201": {
             "description": "success",
-            "$ref": "#/definitions/Articles"
+            "$ref": "#/definitions/Article"
           },
           "400": { "description": "Bad request" },
           "500": { "description": "Server error" }
@@ -488,11 +488,11 @@
             }
           }
         ],
-        "schema": { "$ref": "#/definitions/Articles" },
+        "schema": { "$ref": "#/definitions/Article" },
         "responses": {
           "201": {
             "description": "success",
-            "$ref": "#/definitions/Articles"
+            "$ref": "#/definitions/Article"
           },
           "400": { "description": "Bad request" },
           "500": { "description": "Server error" }
