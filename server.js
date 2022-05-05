@@ -9,15 +9,17 @@ if (!config.get("serverPort") || !config.get("jwtPrivateKey")) {
   console.log("Jwt not configured");
   process.exit(-1);
 }
+const app = express();
 
+require("./startup/prod")(app);
 // Connect to MongoDB database
 mongoose
-  .connect("mongodb://localhost:27017/my-brand", { useNewUrlParser: true })
+  .connect("mongodb+srv://eloi:ae789789@my-brand.etgh9.mongodb.net/test", {
+    useNewUrlParser: true,
+  })
   .then(() => {
     console.log("Database Connected Successfully !");
   });
-
-const app = express();
 
 const swaggerOptions = {
   swaggerDefinition: {
