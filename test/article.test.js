@@ -7,7 +7,7 @@ chai.should();
 
 chai.use(chaiHttp);
 
-describe("Tasks API", () => {
+describe("Articles API", () => {
   /**
    * Test the GET route
    */
@@ -75,9 +75,10 @@ describe("Tasks API", () => {
    * Test the POST route
    */
   describe("POST /article", () => {
-    it("It should POST a new article", (done) => {
+    it("It should not POST a new article because Joi validation failed", (done) => {
       const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUwMzY3ZTg0ZmM1MmIwZTU0YjM2NDUiLCJlbWFpbCI6ImVsb2ltaXplcm8xMjNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJlbG9pIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUwOTUyMjA4fQ.Lo1QjnXxhBp6Vt10TdFS4H1WKpA4VbYl5U3svoS49_c";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUwMzY3ZTg0ZmM1MmIwZTU0YjM2NDUiLCJlbWFpbCI6ImVsb2ltaXplcm8xMjNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJlbG9pIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxNzgxMDI5fQ.30uAIKDNt5hdqI7aUsfe2cn6foZqcG9f2T_w10zjGE8";
+
       const article = {
         title: "Test Article",
         content: "This is the content from test",
@@ -88,16 +89,7 @@ describe("Tasks API", () => {
         .set({ "x-auth-token": token })
         .send(article)
         .end((err, response) => {
-          response.should.have.status(200);
-          response.body.should.be.a("object");
-          response.body.should.have.property("_id");
-          response.body.should.have.property("title");
-          response.body.should.have.property("content");
-          response.body.should.have.property("author");
-          response.body.should.have.property("dateCreated");
-          response.body.should.have
-            .property("_id")
-            .eq("6266f8091c9f90bd9ffde058");
+          response.should.have.status(400);
           done();
         });
     });
@@ -107,9 +99,9 @@ describe("Tasks API", () => {
    * Test the put route
    */
   describe("PUT /article", () => {
-    it("It should not  PUT(UPDATE) a new article because you are not admin, not autheticated !", (done) => {
+    it("It should not UPDATE a new article because Joi validation failed", (done) => {
       const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUwMzY3ZTg0ZmM1MmIwZTU0YjM2NDUiLCJlbWFpbCI6ImVsb2ltaXplcm8xMjNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJlbG9pIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUwOTUyMjA4fQ.Lo1QjnXxhBp6Vt10TdFS4H1WKpA4VbYl5U3svoS49_c";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUwMzY3ZTg0ZmM1MmIwZTU0YjM2NDUiLCJlbWFpbCI6ImVsb2ltaXplcm8xMjNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJlbG9pIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxNzgxMDI5fQ.30uAIKDNt5hdqI7aUsfe2cn6foZqcG9f2T_w10zjGE8";
       const articleId = "6266f8091c9f90bd9ffde058";
 
       const article = {
@@ -122,16 +114,7 @@ describe("Tasks API", () => {
         .set({ "x-auth-token": token })
         .send(article)
         .end((err, response) => {
-          response.should.have.status(200);
-          response.body.should.be.a("object");
-          response.body.should.have.property("_id");
-          response.body.should.have.property("title");
-          response.body.should.have.property("content");
-          response.body.should.have.property("author");
-          response.body.should.have.property("dateCreated");
-          response.body.should.have
-            .property("_id")
-            .eq("6266f8091c9f90bd9ffde058");
+          response.should.have.status(400);
           done();
         });
     });
@@ -183,3 +166,69 @@ describe("Tasks API", () => {
 //       });
 //   });
 // });
+
+describe("Users API", () => {
+  /**
+   * Test the GET ALL USERS route
+   */
+  describe("GET /users", () => {
+    it("It should get all users", (done) => {
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUwMzY3ZTg0ZmM1MmIwZTU0YjM2NDUiLCJlbWFpbCI6ImVsb2ltaXplcm8xMjNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJlbG9pIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxNzgxMDI5fQ.30uAIKDNt5hdqI7aUsfe2cn6foZqcG9f2T_w10zjGE8";
+      chai
+        .request(server)
+        .get("/users")
+        .set({ "x-auth-token": token })
+        .end((err, response) => {
+          response.should.have.status(200);
+          response.body.should.be.a("array");
+          done();
+        });
+    });
+  });
+
+  /**
+   * Test the GET ALL USERS route
+   */
+  describe("GET /users/:id", () => {
+    it("It should get one user ", (done) => {
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjUwMzY3ZTg0ZmM1MmIwZTU0YjM2NDUiLCJlbWFpbCI6ImVsb2ltaXplcm8xMjNAZ21haWwuY29tIiwidXNlcm5hbWUiOiJlbG9pIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjUxNzgxMDI5fQ.30uAIKDNt5hdqI7aUsfe2cn6foZqcG9f2T_w10zjGE8";
+
+      const userId = "6250367e84fc52b0e54b3645";
+
+      chai
+        .request(server)
+        .get("/users/" + userId)
+        .set({ "x-auth-token": token })
+        .end((err, response) => {
+          response.should.have.status(200);
+          response.body.should.be.a("object");
+          response.body.should.have.property("_id");
+          response.body.should.have.property("username");
+          response.body.should.have.property("password");
+          response.body.should.have.property("isAdmin");
+          response.body.should.have.property("DateCreated");
+          response.body.should.have
+            .property("_id")
+            .eq("6250367e84fc52b0e54b3645");
+          done();
+        });
+    });
+  });
+});
+
+describe("ContactMe api", () => {
+  describe("GET /contactMe", () => {
+    it("It should get all contactMe messages", (done) => {
+      chai
+        .request(server)
+        .get("/contactMe")
+        .end((err, response) => {
+          response.should.have.status(200);
+          response.body.should.be.a("array");
+          done();
+        });
+    });
+  });
+});
