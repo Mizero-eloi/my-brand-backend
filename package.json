@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "mocha"
+  },
+  "engines": {
+    "node": "14.17.6"
   },
   "repository": {
     "type": "git",
@@ -21,8 +24,10 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
+    "compression": "^1.7.4",
     "config": "^3.3.7",
     "express": "^4.17.3",
+    "helmet": "^5.0.2",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
