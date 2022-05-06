@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const config = require("config");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
@@ -11,7 +12,6 @@ if (!config.get("serverPort") || !config.get("jwtPrivateKey")) {
 }
 const app = express();
 
-require("./startup/prod")(app);
 // Connect to MongoDB database
 mongoose
   .connect("mongodb+srv://eloi:ae789789@my-brand.etgh9.mongodb.net/test", {
@@ -43,6 +43,8 @@ app.use(
   swaggerUi.setup(swaggerDoc, false, { docExpansion: "none" })
 );
 
+app.use(cors());
+require("./startup/prod")(app);
 // Using routes
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
