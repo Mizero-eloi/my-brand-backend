@@ -1,0 +1,21 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "circleci-project-setup",
+    "eloi-Dev",
+    "main",
+    "origin"
+  ],
+  "parent": {
+    "circleci-project-setup": "main",
+    "eloi-Dev": "main",
+    "main": null,
+    "origin": "main"
+  },
+  "order": [
+    "main",
+    "circleci-project-setup",
+    "eloi-Dev",
+    "origin"
+  ]
+}
