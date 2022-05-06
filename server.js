@@ -60,7 +60,7 @@ app.use("/users", require("./routes/userRoute"));
 
 const port = process.env.PORT || config.get("serverPort");
 
-app.listen(5000, () => {
+app.listen(port, () => {
   console.log(`Server listening at port ${port}`);
 });
 
