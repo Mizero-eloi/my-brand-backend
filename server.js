@@ -43,7 +43,11 @@ app.use(
   swaggerUi.setup(swaggerDoc, false, { docExpansion: "none" })
 );
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 require("./startup/prod")(app);
 // Using routes
 app.use(express.json());
